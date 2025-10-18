@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'; // <-- useCallback'i ekleyin
+import React, { useState, useEffect, useMemo, useCallback } from 'react'; // <-- Gerekli hook'lar
 import { useAuth } from '../contexts/AuthContext';
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../api/api';
 import TodoItem from './TodoItem';
@@ -6,9 +6,17 @@ import TodoForm from './TodoForm';
 
 const TodoList = () => {
     const { user } = useAuth();
-    // ... (diğer state tanımlamaları)
+    
+    // Hatanın kaynağı: Bu state tanımlamaları eksik veya silinmiş!
+    // Lütfen aşağıdaki satırların olduğundan emin olun:
+    const [todos, setTodos] = useState([]);
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null);
+    const [filter, setFilter] = useState('Tümü');
+    const [editingTodo, setEditingTodo] = useState(null); 
+    // --- State Tanımlamaları Bitişi ---
 
-    // YENİ: fetchTodos'u useCallback ile sarmalıyoruz
+    // fetchTodos'u useCallback ile sarmalıyoruz (önceki düzeltme)
     const fetchTodos = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -23,22 +31,16 @@ const TodoList = () => {
         } finally {
             setLoading(false);
         }
-    }, [user.id]); // user.id değiştiğinde fonksiyon yeniden oluşturulmalı
+    }, [user.id, setTodos, setError, setLoading]); // setState fonksiyonlarını da callback bağımlılığına ekleyerek React'in kurallarını tamamen karşılıyoruz.
 
-    // useEffect kullanımı artık doğru
+    // useEffect kullanımı
     useEffect(() => {
         if (user) {
             fetchTodos();
         }
-    }, [user, fetchTodos]); // fetchTodos'u bağımlılık dizisine ekliyoruz
-
-    // ... (diğer handle fonksiyonları)
-
-    useEffect(() => {
-        if (user) {
-            fetchTodos();
-        }
-    }, [user]);
+    }, [user, fetchTodos]); 
+    
+    // ... (Geri kalan handleSaveTodo, handleToggleTodo, handleDeleteTodo, useMemo ve return kısmı aynı kalmalı)
 
     // Yeni görev ekleme veya mevcut görevi düzenleme işlemi
     const handleSaveTodo = async (text, priority, dueDate) => {
