@@ -1,11 +1,19 @@
 // src/api/api.js
+
 import axios from 'axios';
 
-// ARTIK TAM URL YERİNE SADECE GÖRECELİ YOLU KULLANIYORUZ.
-// Frontend, kendi adresinin yanına /api ekleyecektir.
-const API_URL = '/api'; 
+// YENİ KOD: Vercel'den gelen Ortam Değişkenini okur.
+// Eğer ortam değişkeni varsa (canlı ortam), onu kullanır.
+// Yoksa (yerel ortam), localhost'u kullanır.
+const VERCEL_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-// ... (geri kalan kod aynı kalmalı)
+// API_URL şimdi dinamik olarak belirlenir. 
+// Canlıda: https://[vercel-site].vercel.app/api
+// Yerelde: http://localhost:5000/
+const API_URL = VERCEL_BASE_URL ? `${VERCEL_BASE_URL}/api` : 'http://localhost:5000';
+
+
+
 
 // Hata yönetimi için genel bir fonksiyon
 const handleError = (error, operation) => {
