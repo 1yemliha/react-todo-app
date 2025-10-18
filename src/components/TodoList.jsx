@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react'; // <-- useCallback'i ekleyin
 import { useAuth } from '../contexts/AuthContext';
 import { getTodos, addTodo, updateTodo, deleteTodo } from '../api/api';
 import TodoItem from './TodoItem';
-import TodoForm from './TodoForm'; // Formu yeniden kullanıyoruz
+import TodoForm from './TodoForm'; 
 
 const TodoList = () => {
     const { user } = useAuth();
-    const [todos, setTodos] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [filter, setFilter] = useState('Tümü');
-    const [editingTodo, setEditingTodo] = useState(null); // Düzenlenen görevi tutar
+    // ... (diğer state tanımlamaları)
 
-    // API'den görevleri çekme işlemi
-    const fetchTodos = async () => {
+    // YENİ: fetchTodos'u useCallback ile sarmalıyoruz
+    const fetchTodos = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
+            // Kullanıcıya ait görevleri API'den getir
             const data = await getTodos(user.id);
             // Tarihe göre sıralama (gelecek tarihler üste)
             const sortedData = data.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
@@ -26,7 +23,16 @@ const TodoList = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [user.id]); // user.id değiştiğinde fonksiyon yeniden oluşturulmalı
+
+    // useEffect kullanımı artık doğru
+    useEffect(() => {
+        if (user) {
+            fetchTodos();
+        }
+    }, [user, fetchTodos]); // fetchTodos'u bağımlılık dizisine ekliyoruz
+
+    // ... (diğer handle fonksiyonları)
 
     useEffect(() => {
         if (user) {
