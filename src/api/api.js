@@ -1,7 +1,11 @@
+// src/api/api.js
 import axios from 'axios';
 
-// json-server'ın çalıştığı adres
-const API_URL = 'https://react-todo-app-delta-flax.vercel.app/';
+// ARTIK TAM URL YERİNE SADECE GÖRECELİ YOLU KULLANIYORUZ.
+// Frontend, kendi adresinin yanına /api ekleyecektir.
+const API_URL = '/api'; 
+
+// ... (geri kalan kod aynı kalmalı)
 
 // Hata yönetimi için genel bir fonksiyon
 const handleError = (error, operation) => {
