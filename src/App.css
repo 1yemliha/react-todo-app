@@ -1,38 +1,363 @@
-.App {
-  text-align: center;
+/* Genel Ayarlar ve Font */
+:root {
+    --primary-color: #4A90E2; /* Mavi - Ana eylem / Kaydet */
+    --secondary-color: #F7A800; /* Sarımsı - Orta Öncelik / Düzenle Butonu */
+    --success-color: #00BFA5; /* Yeşil - Tamamlanmış / Düşük Öncelik / Ekle */
+    --danger-color: #FF5252; /* Kırmızı - Yüksek Öncelik / Geçmiş Tarih / Silme */
+    --bg-light: #f4f7f6; /* Yedek renk */
+    --card-bg: #ffffff; /* Kartların rengi */
+    --text-dark: #333;
+    --text-light: #666;
+    --border-color: #e0e0e0;
+    
+    /* YENİ GRADIENT DEĞİŞKENLERİ */
+    --body-gradient-start: #E1F5FE; /* Açık Mavi */
+    --body-gradient-end: #F0F4C3; /* Soluk Sarı/Bej */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* BODY STİLİ (Yumuşak Geçişli Arka Plan) */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Düz renk yerine yumuşak, çapraz degrade (gradient) */
+    background: linear-gradient(135deg, var(--body-gradient-start) 0%, var(--body-gradient-end) 100%);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    color: var(--text-dark);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* APP CONTAINER STİLİ (Şeffaf Kart Görünümü) */
+.app-container {
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.95); /* Hafif şeffaf beyaz */
+    padding: 30px;
+    border-radius: 18px; /* Daha yuvarlak köşeler */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), /* Derin gölge */
+                0 0 0 1px rgba(255, 255, 255, 0.8); /* İnce beyaz çerçeve */
+    backdrop-filter: blur(5px); /* Hafif bulanıklık efekti (Modern tarayıcılar için) */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-weight: 700;
 }
 
-.App-link {
-  color: #61dafb;
+/* --- Başlık ve Çıkış Butonu --- */
+.app-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logout-button {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+.logout-button:hover {
+    background-color: #e64a4a;
+}
+
+/* --- Form ve Giriş Alanları --- */
+input, select, button {
+    font-size: 1em;
+}
+
+/* Auth (Giriş/Kayıt) Stilleri */
+.auth-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    border: none; /* Kenarlık kaldırıldı */
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Daha belirgin gölge */
+}
+.auth-container form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.auth-container form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+.auth-container button:hover:not(:disabled) {
+    background-color: #3b73b8;
+}
+.auth-container .toggle-button {
+    margin-top: 20px;
+    background: transparent;
+    color: var(--primary-color);
+    border: none;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+/* --- Todo Form Stilleri --- */
+.todo-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+    padding: 25px; /* Daha fazla padding */
+    border: none; /* Kenarlık kaldırıldı */
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Hafif kalkık gölge */
+}
+.todo-form input[type="text"] {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+.form-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.form-controls select,
+.form-controls input[type="date"] {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    flex: 1; /* Esnek genişlik */
+    min-width: 0;
+}
+/* Genel form butonu ayarları */
+.form-controls button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+}
+
+/* Ekle butonu */
+.form-controls .add-button {
+    background-color: var(--success-color);
+}
+.form-controls .add-button:hover:not(:disabled) {
+    background-color: #00a08d;
+}
+
+/* Kaydet butonu (Düzenleme modu) */
+.form-controls .save-button {
+    background-color: var(--primary-color);
+}
+.form-controls .save-button:hover:not(:disabled) {
+    background-color: #3b73b8;
+}
+
+/* İptal butonu (Düzenleme modu) */
+.form-controls .cancel-button {
+    background-color: #ccc;
+    color: var(--text-dark);
+}
+.form-controls .cancel-button:hover:not(:disabled) {
+    background-color: #b0b0b0;
+}
+
+/* Düzenleme formu başlığı */
+.form-title {
+    text-align: center;
+    color: var(--text-dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 500;
+}
+
+/* --- Filtre Butonları Stilleri --- */
+.filter-buttons {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.filter-buttons button {
+    padding: 10px 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    cursor: pointer;
+    border-radius: 20px; /* Yuvarlak butonlar */
+    transition: all 0.2s;
+}
+.filter-buttons button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 6px rgba(74, 144, 226, 0.3);
+}
+.filter-buttons button:hover:not(.active) {
+    background-color: #f0f0f0;
+}
+
+/* --- Todo Liste Stilleri --- */
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* Hafif kalkık gölge */
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+    border-left: 5px solid transparent; /* Öncelik rengi için yer */
+}
+
+.todo-item.completed {
+    opacity: 0.7;
+    background-color: #f9fbfd;
+    border-left-color: #ccc !important;
+}
+
+.todo-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.todo-content input[type="checkbox"] {
+    margin-right: 15px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.todo-text {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.todo-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+/* --- Öncelik Renk Kodları --- */
+.priority-tag {
+    font-size: 0.75em;
+    padding: 4px 10px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.todo-item.priority-high { border-left-color: var(--danger-color); }
+.todo-item.priority-medium { border-left-color: var(--secondary-color); }
+.todo-item.priority-low { border-left-color: var(--success-color); }
+
+.todo-item.priority-high .priority-tag { background-color: var(--danger-color); }
+.todo-item.priority-medium .priority-tag { background-color: var(--secondary-color); color: var(--text-dark);}
+.todo-item.priority-low .priority-tag { background-color: var(--success-color); }
+
+/* --- Bitiş Tarihi Stili --- */
+.due-date {
+    font-size: 0.9em;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Bitiş Tarihi Geçmiş Görev Uyarısı */
+.due-date.overdue {
+    color: var(--danger-color);
+    font-weight: bold;
+    background-color: rgba(255, 82, 82, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- TodoItem Buton Stilleri (Düzenle ve Sil) --- */
+.todo-meta button {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Düzenle Butonu Stili */
+.todo-meta .edit-button {
+    background-color: var(--secondary-color); 
+    color: var(--text-dark); 
+}
+.todo-meta .edit-button:hover {
+    background-color: #e69d00;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Sil Butonu Stili */
+.todo-meta .delete-button {
+    background-color: #ff6347; 
+    color: white;
+}
+.todo-meta .delete-button:hover {
+    background-color: var(--danger-color);
+    transform: scale(1.05);
+}
+
+/* --- Geri Bildirim ve Yükleme Stilleri --- */
+.loading-message, .error-message, .no-tasks {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+}
+.loading-message {
+    background-color: #e6f7ff;
+    color: var(--primary-color);
+}
+.error-message {
+    background-color: #ffe6e6;
+    color: var(--danger-color);
+}
+.no-tasks {
+    color: var(--text-light);
+    border: 1px dashed var(--border-color);
 }

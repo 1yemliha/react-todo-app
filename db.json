@@ -1,0 +1,56 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "user1",
+      "password": "pass1"
+    },
+    {
+      "id": "864a",
+      "username": "yemliha",
+      "password": "yemliha"
+    }
+  ],
+  "todos": [
+    {
+      "id": "1",
+      "userId": 1,
+      "text": "Projeye Başla",
+      "completed": false,
+      "priority": "Yüksek",
+      "dueDate": "2025-11-01"
+    },
+    {
+      "id": "2",
+      "userId": 1,
+      "text": "React Bileşenlerini Tasarla",
+      "completed": true,
+      "priority": "Orta",
+      "dueDate": "2025-10-25"
+    },
+    {
+      "id": "d5d8",
+      "userId": "864a",
+      "text": "ödev yap",
+      "completed": true,
+      "priority": "Düşük",
+      "dueDate": "2025-10-01"
+    },
+    {
+      "id": "5642",
+      "userId": "864a",
+      "text": "okula git",
+      "completed": false,
+      "priority": "Yüksek",
+      "dueDate": "2025-10-31"
+    },
+    {
+      "id": "f6ce",
+      "userId": "864a",
+      "text": "yemek ye",
+      "completed": false,
+      "priority": "Orta",
+      "dueDate": "2025-10-22"
+    }
+  ]
+}
