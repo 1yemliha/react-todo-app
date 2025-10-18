@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/server.js": {
-      "includeFiles": ["db.json"]
+      "includeFiles": "db.json"  
     }
   },
   "rewrites": [
