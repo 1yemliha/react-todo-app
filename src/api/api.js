@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // json-server'ın çalıştığı adres
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://react-todo-app-delta-flax.vercel.app/';
 
 // Hata yönetimi için genel bir fonksiyon
 const handleError = (error, operation) => {
