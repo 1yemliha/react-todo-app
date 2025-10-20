@@ -9,6 +9,16 @@
       "id": "864a",
       "username": "yemliha",
       "password": "yemliha"
+    },
+    {
+      "id": "287b",
+      "username": "ali",
+      "password": "ali"
+    },
+    {
+      "id": "8266",
+      "username": "a",
+      "password": "a"
     }
   ],
   "todos": [
@@ -32,7 +42,7 @@
       "id": "d5d8",
       "userId": "864a",
       "text": "ödev yap",
-      "completed": true,
+      "completed": false,
       "priority": "Düşük",
       "dueDate": "2025-10-01"
     },
@@ -48,7 +58,7 @@
       "id": "f6ce",
       "userId": "864a",
       "text": "yemek ye",
-      "completed": false,
+      "completed": true,
       "priority": "Orta",
       "dueDate": "2025-10-22"
     }
